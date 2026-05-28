@@ -1,0 +1,11 @@
+resource_id,title,url,tier,type,tags,estimated_minutes,priority
+r001,赛题官方页面,https://example.com/official,official,doc,baseline,30,must_read
+r002,报名与提交说明 PDF,https://example.com/rules.pdf,official,doc,baseline,45,must_read
+r003,Python 官方教程,https://docs.python.org/3/tutorial/,course,tutorial,python,180,recommended
+r004,scikit-learn 用户指南,https://scikit-learn.org/stable/user_guide.html,course,doc,ml_basics,120,recommended
+r005,PyTorch 60min blitz,https://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html,course,tutorial,pytorch,90,recommended
+r006,ML 项目 checklist（Google）,https://developers.google.com/machine-learning/guides/rules-of-ml,course,doc,deployment,60,optional
+r007,Kaggle Learn 入门,https://www.kaggle.com/learn,course,course,ml_basics,240,recommended
+r008,如何写技术报告（示例）,https://example.com/tech-report,community,doc,ppt,45,optional
+r009,GitHub 优秀开源赛题 baseline,https://github.com/example/baseline,official,repo,baseline,120,must_read
+r010,数据标注与隐私合规导读,https://example.com/ethics,community,doc,ethics,30,optional

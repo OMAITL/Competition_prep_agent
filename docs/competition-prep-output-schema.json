@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CompetitionPrepPackage",
+  "description": "竞赛备战规划 Agent 最终输出结构",
+  "type": "object",
+  "required": [
+    "meta",
+    "competition_analysis",
+    "prep_plan",
+    "resources",
+    "papers",
+    "skill_gap",
+    "submission_checklist"
+  ],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["plan_id", "created_at", "prompt_version", "competition_name", "deadline"],
+      "properties": {
+        "plan_id": { "type": "string", "description": "uuid" },
+        "created_at": { "type": "string", "format": "date-time" },
+        "prompt_version": { "type": "string", "example": "v0.3" },
+        "competition_name": { "type": "string" },
+        "competition_template_id": {
+          "type": "string",
+          "enum": ["ai_innovation", "kaggle_tabular", "math_modeling"]
+        },
+        "deadline": { "type": "string", "format": "date" },
+        "weeks_remaining": { "type": "integer", "minimum": 1 },
+        "weekly_hours": { "type": "integer" },
+        "skill_level": {
+          "type": "string",
+          "enum": ["beginner", "intermediate", "experienced"]
+        },
+        "disclaimer": {
+          "type": "string",
+          "default": "本方案仅供参考，请以官方赛题与章程为准。"
+        }
+      }
+    },
+    "competition_analysis": {
+      "type": "object",
+      "description": "Prompt1 输出",
+      "required": [
+        "summary",
+        "format",
+        "scoring",
+        "deliverables",
+        "required_skills",
+        "common_pitfalls"
+      ],
+      "properties": {
+        "summary": { "type": "string", "maxLength": 500 },
+        "format": { "type": "string", "description": "赛制说明" },
+        "scoring": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "评分维度列表"
+        },
+        "deliverables": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "提交物类型"
+        },
+        "required_skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "priority", "description"],
+            "properties": {
+              "name": { "type": "string" },
+              "priority": { "type": "string", "enum": ["must", "should", "nice"] },
+              "description": { "type": "string" }
+            }
+          }
+        },
+        "common_pitfalls": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 5
+        },
+        "paper_search_keywords": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "供 arXiv 检索的英文关键词，3-5 个"
+        }
+      }
+    },
+    "prep_plan": {
+      "type": "object",
+      "description": "Prompt2 输出",
+      "required": ["total_weeks", "phases", "weekly_summary"],
+      "properties": {
+        "total_weeks": { "type": "integer" },
+        "phases": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 6,
+          "items": {
+            "type": "object",
+            "required": [
+              "phase_id",
+              "title",
+              "week_range",
+              "goals",
+              "skills",
+              "estimated_hours",
+              "acceptance_criteria",
+              "risks"
+            ],
+            "properties": {
+              "phase_id": { "type": "integer" },
+              "title": { "type": "string" },
+              "week_range": { "type": "string", "example": "W1-W2" },
+              "goals": { "type": "array", "items": { "type": "string" } },
+              "skills": { "type": "array", "items": { "type": "string" } },
+              "estimated_hours": { "type": "integer" },
+              "acceptance_criteria": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "可验证的完成标准"
+              },
+              "risks": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "weekly_summary": {
+          "type": "array",
+          "description": "按周拆分的简要任务，可选",
+          "items": {
+            "type": "object",
+            "properties": {
+              "week": { "type": "integer" },
+              "focus": { "type": "string" },
+              "tasks": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      }
+    },
+    "resources": {
+      "type": "array",
+      "description": "Prompt3 + curated 合并后的分级资料",
+      "items": {
+        "type": "object",
+        "required": [
+          "resource_id",
+          "title",
+          "tier",
+          "type",
+          "url",
+          "reason",
+          "estimated_minutes",
+          "phase_ids",
+          "verified"
+        ],
+        "properties": {
+          "resource_id": { "type": "string" },
+          "title": { "type": "string" },
+          "tier": {
+            "type": "string",
+            "enum": ["official", "course", "community", "paper"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["doc", "video", "repo", "tutorial", "paper", "tool"]
+          },
+          "url": {
+            "type": "string",
+            "description": "verified=false 时必须为空字符串，title 旁显示待补充"
+          },
+          "reason": { "type": "string", "maxLength": 200 },
+          "estimated_minutes": { "type": "integer" },
+          "phase_ids": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "description": "关联 prep_plan.phases.phase_id"
+          },
+          "priority": { "type": "string", "enum": ["must_read", "recommended", "optional"] },
+          "verified": {
+            "type": "boolean",
+            "description": "true=来自 curated 或 API；false=不允许伪造 url"
+          },
+          "source": {
+            "type": "string",
+            "enum": ["curated", "llm_suggested", "arxiv"]
+          }
+        }
+      }
+    },
+    "papers": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "required": [
+          "title",
+          "authors",
+          "year",
+          "url",
+          "relevance_reason",
+          "read_priority",
+          "verified"
+        ],
+        "properties": {
+          "title": { "type": "string" },
+          "authors": { "type": "string" },
+          "year": { "type": "integer" },
+          "arxiv_id": { "type": "string" },
+          "url": { "type": "string" },
+          "relevance_reason": { "type": "string", "maxLength": 300 },
+          "read_priority": { "type": "string", "enum": ["must", "should", "optional"] },
+          "related_phase_ids": { "type": "array", "items": { "type": "integer" } },
+          "verified": { "type": "boolean" }
+        }
+      }
+    },
+    "skill_gap": {
+      "type": "object",
+      "required": ["gaps", "strengths", "priority_actions"],
+      "properties": {
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "skill": { "type": "string" },
+              "current_level": { "type": "string", "enum": ["none", "basic", "proficient"] },
+              "required_level": { "type": "string", "enum": ["basic", "proficient", "expert"] },
+              "action": { "type": "string" }
+            }
+          }
+        },
+        "strengths": { "type": "array", "items": { "type": "string" } },
+        "priority_actions": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 5
+        }
+      }
+    },
+    "submission_checklist": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["item", "due_phase_id", "tips"],
+        "properties": {
+          "item": { "type": "string" },
+          "due_phase_id": { "type": "integer" },
+          "tips": { "type": "string" }
+        }
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "description": "用户试用后填写，可选",
+      "properties": {
+        "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "useless_resource_ids": { "type": "array", "items": { "type": "string" } },
+        "comment": { "type": "string" }
+      }
+    }
+  }
+}
