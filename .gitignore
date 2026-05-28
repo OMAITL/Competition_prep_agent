@@ -5,3 +5,7 @@ __pycache__/
 data/chroma/
 *.egg-info/
 .DS_Store
+
+# 官方目录 PDF 及解析中间产物（版权/体积，请本地放置，见 data/README.md）
+data/competition-catalog-2025.pdf
+data/catalog-raw.txt

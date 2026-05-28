@@ -80,7 +80,9 @@
 ## Prompt 2：分阶段备战路径
 
 **输入变量**
-- `{{competition_analysis}}`（Prompt1 的 JSON 字符串）
+- `{{competition_analysis}}`（Prompt1 的 JSON 字符串，**路径规划的主依据**）
+- `{{competition_name}}`（catalog 正式名称）
+- `{{rag_context}}`（可选，检索点 A′，见文末 RAG 增补）
 - `{{deadline}}`
 - `{{weekly_hours}}`
 - `{{skill_level}}`
@@ -92,8 +94,13 @@
 ```text
 基于赛题解析结果，为用户生成分阶段备战路径。
 
-赛题解析：
+比赛名称：{{competition_name}}
+
+赛题解析（优先采信，须与具体比赛对齐，勿泛化为赛道模板）：
 {{competition_analysis}}
+
+【知识库检索结果（可选，补充阶段/里程碑/提交清单）】
+{{rag_context}}
 
 用户约束：
 - 截止日期：{{deadline}}
@@ -283,27 +290,34 @@ r002,Python 数据分析入门,https://example.com/tutorial,course,tutorial,"pyt
 
 ## RAG 增补（检索增强）
 
-在调用 Prompt 1 / 3 **之前**执行检索，将结果填入 `{{rag_context}}`。
+在调用各 Prompt **之前**执行检索，将结果填入 `{{rag_context}}`（Prompt 2 可选）。
 
 ```python
-from rag.retrieve import (
-    retrieve_for_competition,
-    merge_retrieval_results,
-    format_rag_context,
+from rag.pipeline_hook import (
+    build_rag_context_for_prompt1,
+    build_rag_context_for_prompt2,
+    build_rag_context_for_prompt3,
 )
 
-hits = retrieve_for_competition(competition_name, archetype)
-rag_context = format_rag_context(merge_retrieval_results(hits))
+rag_context_p1 = build_rag_context_for_prompt1(competition_name, archetype)
+rag_context_p2 = build_rag_context_for_prompt2(competition_name, archetype, goal=goal)
+rag_context_p3 = build_rag_context_for_prompt3(competition_name, archetype)
 ```
 
-### Prompt 1 增加段落（放在赛题原文之后）
+### Prompt 1（检索点 A）
+
+放在赛题原文之后：
 
 ```text
 【知识库检索结果（优先采信；与官网冲突时以官网为准）】
 {{rag_context}}
 ```
 
-### Prompt 3 增加段落
+### Prompt 2（检索点 A′，可选）
+
+路径规划**主要依据 Prompt 1 的 competition_analysis**；`rag_context` 仅作阶段/里程碑补充。见上文 Prompt 2 模板内段落。
+
+### Prompt 3（检索点 B）
 
 ```text
 【知识库中的备赛资料片段（可补充 curated，禁止编造其中未出现的 URL）】
@@ -314,6 +328,7 @@ rag_context = format_rag_context(merge_retrieval_results(hits))
 
 ```text
 7. 若提供 rag_context，其中事实优先于模型臆测；仍禁止编造 rag_context 中未出现的链接。
+8. Prompt 2 的路径须与 competition_analysis 中的具体比赛一致，不得仅按 archetype 泛化。
 ```
 
 索引构建见 `docs/RAG_DESIGN.md` 与 `python scripts/build_rag_index.py --all`。

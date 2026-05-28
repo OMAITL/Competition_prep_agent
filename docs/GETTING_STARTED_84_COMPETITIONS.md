@@ -1,33 +1,5 @@
 # 如何开始：84 项教育部认可竞赛 · 备战规划 Agent
 
-> 权威目录 PDF：[中山大学信息科学与工程学院镜像](https://ifcen.sysu.edu.cn/sites/default/files/2026-01/2025%E5%B9%B4%E6%95%99%E8%82%B2%E9%83%A8%E8%AE%A4%E5%8F%AF%E7%9A%84%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E5%AD%A6%E7%A7%91%E7%AB%9E%E8%B5%9B%E7%9B%AE%E5%BD%95%E6%B8%85%E5%8D%95.pdf)  
-> 本地已解析：`data/competitions_catalog_84.json`（84 条：序号、名称、官网链接）
-
----
-
-## 0. 先建立正确预期（非常重要）
-
-### PDF 里有什么、没有什么
-
-| PDF 提供 | PDF **不**提供 |
-|----------|----------------|
-| 84 项**正式名称** | 分阶段备赛路径 |
-| 每项**官网链接**（个别缺失需补） | 必读论文清单 |
-| 目录说明（来源：高教学会 2023 竞赛分析报告） | 赛题原文、评分细则 |
-
-因此你的产品应是：
-
-```
-84 项目录（结构化数据库）
-    + 用户选择与个人约束（截止时间、每周小时、水平）
-    + 按「赛道模板」生成备战包（路径 / 资料 / 论文 / Checklist）
-    + 对选中项抓取官网摘要（可选）
-```
-
-**不要**一开始追求：84 项每一项都有 50 条人工精修资料。  
-**要**追求：84 项都能**选中并生成可用初稿**，其中 10～20 项做到**高质量可验证**。
-
----
 
 ## 1. 产品架构（三层）
 
@@ -66,7 +38,7 @@ flowchart TB
 
 ---
 
-## 2. 今天就可以做的第一步（Day 1～2）
+## 2. 搭建步骤
 
 ### Step 1.1 环境
 
@@ -299,8 +271,9 @@ paper_search_keywords: ["mathematical modeling competition", "optimization"]
 
 | 路径 | 用途 |
 |------|------|
-| `data/competition-catalog-2025.pdf` | 原始 PDF |
 | `data/competitions_catalog_84.json` | 解析后的 84 项 |
+| `data/README.md` | PDF 等本地数据说明（PDF **不提交** GitHub） |
+| `data/competition-catalog-2025.pdf` | 原始 PDF（**仅本地**，见 `data/README.md`） |
 | `scripts/extract_catalog_from_pdf.py` | 重新解析 PDF |
 | `scripts/assign_archetypes.py` | 批量打 archetype 标签 |
 | `docs/competition-prep-agent-PRD.md` | 产品 PRD |

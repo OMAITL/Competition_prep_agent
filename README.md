@@ -15,8 +15,8 @@ python scripts/assign_archetypes.py
 
 ## 数据
 
-- `data/competition-catalog-2025.pdf` — 官方目录 PDF
 - `data/competitions_catalog_84.json` — 84 项结构化名录（名称 + 官网）
+- `data/README.md` — PDF 等本地文件说明（**PDF 不提交 GitHub**）
 
 ## RAG（检索增强）
 

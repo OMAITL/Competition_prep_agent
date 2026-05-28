@@ -41,6 +41,30 @@ def retrieve(
     return out
 
 
+def _retrieve_dual(
+    competition_name: str,
+    archetype: str,
+    *,
+    kb_suffix: str,
+    archetype_suffix: str,
+    extra_query: str = "",
+    top_k: int | None = None,
+) -> dict[str, list[dict]]:
+    q_base = f"{competition_name} {archetype} {extra_query}".strip()
+    return {
+        "competition_kb": retrieve(
+            f"{q_base} {kb_suffix}",
+            COLLECTION_COMPETITION_KB,
+            top_k=top_k,
+        ),
+        "archetype": retrieve(
+            f"{q_base} {archetype_suffix}",
+            archetype_collection(archetype),
+            top_k=top_k,
+        ),
+    }
+
+
 def retrieve_for_competition(
     competition_name: str,
     archetype: str,
@@ -48,20 +72,51 @@ def retrieve_for_competition(
     extra_query: str = "",
     top_k: int | None = None,
 ) -> dict[str, list[dict]]:
-    """Prompt1 用：通用库 + 赛道库。"""
-    q_base = f"{competition_name} {archetype} {extra_query}".strip()
-    return {
-        "competition_kb": retrieve(
-            f"{q_base} 赛制 规则 提交 评分",
-            COLLECTION_COMPETITION_KB,
-            top_k=top_k,
-        ),
-        "archetype": retrieve(
-            f"{q_base} 备赛 学习路径 教程 入门",
-            archetype_collection(archetype),
-            top_k=top_k,
-        ),
-    }
+    """检索点 A（Prompt 1）：赛题解析。"""
+    return _retrieve_dual(
+        competition_name,
+        archetype,
+        kb_suffix="赛制 规则 提交 评分",
+        archetype_suffix="备赛 学习路径 教程 入门",
+        extra_query=extra_query,
+        top_k=top_k,
+    )
+
+
+def retrieve_for_prep_plan(
+    competition_name: str,
+    archetype: str,
+    *,
+    extra_query: str = "",
+    top_k: int | None = None,
+) -> dict[str, list[dict]]:
+    """检索点 A′（Prompt 2）：路径规划，偏重 competition_kb / override。"""
+    return _retrieve_dual(
+        competition_name,
+        archetype,
+        kb_suffix="备赛路径 阶段 里程碑 提交清单",
+        archetype_suffix="备赛 学习顺序 阶段 模拟",
+        extra_query=extra_query,
+        top_k=top_k,
+    )
+
+
+def retrieve_for_resources(
+    competition_name: str,
+    archetype: str,
+    *,
+    extra_query: str = "资料 教程 工具 开源",
+    top_k: int | None = None,
+) -> dict[str, list[dict]]:
+    """检索点 B（Prompt 3）：资料推荐。"""
+    return _retrieve_dual(
+        competition_name,
+        archetype,
+        kb_suffix=extra_query,
+        archetype_suffix=extra_query,
+        extra_query="",
+        top_k=top_k,
+    )
 
 
 def format_rag_context(chunks: list[dict], *, max_chars: int = 6000) -> str:
