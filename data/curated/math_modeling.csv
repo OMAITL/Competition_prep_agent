@@ -1,0 +1,16 @@
+resource_id,title,url,tier,type,tags,estimated_minutes,priority
+r001,全国大学生数学建模竞赛官网,http://www.mcm.edu.cn/,official,doc,baseline,30,must_read
+r002,竞赛报名与论文提交（知网平台）,https://www.cnki.net/,official,doc,submission,30,must_read
+r003,Python 官方教程,https://docs.python.org/zh-cn/3/tutorial/,course,tutorial,python,180,recommended
+r004,NumPy 用户指南,https://numpy.org/doc/stable/user/,course,doc,python,numerical,120,recommended
+r005,SciPy 教程,https://docs.scipy.org/doc/scipy/tutorial/,course,doc,python,optimization,120,recommended
+r006,PuLP 线性规划文档,https://coin-or.github.io/pulp/,course,doc,optimization,90,recommended
+r007,LaTeX 项目文档,https://www.latex-project.org/help/documentation/,course,doc,writing,60,recommended
+r008,Overleaf 在线 LaTeX,https://www.overleaf.com/learn,course,tutorial,writing,90,recommended
+r009,Matplotlib 入门,https://matplotlib.org/stable/tutorials/index.html,course,tutorial,visualization,60,recommended
+r010,pandas 入门,https://pandas.pydata.org/docs/getting_started/index.html,course,tutorial,data,90,recommended
+r011,美赛官网 MCM/ICM,https://www.contest.comap.com/,official,doc,international,30,optional
+r012,GitHub: awesome-math-models（赛题与代码合集）,https://github.com/zhanwen/MathModel,community,repo,baseline,120,recommended
+r013,3Blue1Brown 线性代数（视频）,https://www.3blue1brown.com/topics/linear-algebra,course,video,linear_algebra,300,optional
+r014,蒙特卡洛方法简介（SciPy）,https://docs.scipy.org/doc/scipy/tutorial/stats.html,course,doc,simulation,60,optional
+r015,全国大学生数学建模竞赛 LaTeX 模板（GitHub）,https://github.com/latexstudio/CUMCMThesis,community,repo,writing,45,recommended

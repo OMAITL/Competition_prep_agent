@@ -165,7 +165,7 @@
 ```
 
 **推荐栈（vibe coding）**
-- 前端：Streamlit 或 Next.js
+- 前端：Vue 3 + Element Plus（FastAPI 后端）
 - 编排：LangGraph / Dify / 纯 Python 顺序调用
 - 存储：SQLite（`plans` 表存 JSON）
 - 模型：DeepSeek / 通义 / 豆包 API 任选
@@ -202,7 +202,7 @@
 | 周 | 交付 |
 |----|------|
 | W1 | PRD 定稿 + curated CSV 30 条 + Prompt1/2 调通 + 控制台 JSON 输出 |
-| W2 | Streamlit 表单 + 结果页 + Prompt3 + 导出 MD |
+| W2 | Vue 表单 + 结果页 + Prompt3 + 导出 MD |
 | W3 | arXiv 接入 + 防幻觉规则 + 10 人试用 |
 | W4 | 评测报告 + 改 Prompt + 简历 bullet + 演示录屏 3 分钟 |
 

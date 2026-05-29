@@ -46,7 +46,8 @@ flowchart TB
 cd c:\Users\JimiM\Desktop\grade_first\agent
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install pdfplumber streamlit httpx pypdf openai python-dotenv
+pip install -r requirements.txt
+cd frontend && npm install
 ```
 
 ### Step 1.2 确认 84 项目录
@@ -109,7 +110,7 @@ python scripts/assign_archetypes.py
 |----|------|------|
 | 1-2 | 校验 JSON、补全空 URL | `competitions_catalog_84.json` v1 |
 | 3 | 人工修正 archetype（Excel 导出改再合并） | 84 项 archetype 定稿 |
-| 4-5 | Streamlit：搜索 + 下拉选择比赛 | `app.py` 选赛页 |
+| 4-5 | Vue：搜索 + 表格选择比赛 | `frontend/src/views/CompetitionsView.vue` |
 | 6-7 | 展示：名称、官网、archetype、一键「生成备战包」占位 | 可演示选赛 |
 
 ### 第 2 周：先做 1 个 archetype 端到端
@@ -220,7 +221,7 @@ paper_search_keywords: ["mathematical modeling competition", "optimization"]
 
 按顺序复制给 Cursor，**不要一次让它写完整个系统**：
 
-1. **任务 A**：读取 `competitions_catalog_84.json`，Streamlit 搜索框 + 选择框，展示 name/url/archetype。  
+1. **任务 A**：读取 `competitions_catalog_84.json`，Vue 搜索 + 表格选赛，展示 name/url/archetype。  
 2. **任务 B**：SQLite 表 `prep_plans`，字段存完整 JSON。  
 3. **任务 C**：实现 `load_archetype_curated(archetype)` 读 CSV。  
 4. **任务 D**：按 `competition-prep-prompts.md` 实现 `run_pipeline(competition_id, intake)`。  

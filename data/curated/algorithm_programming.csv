@@ -1,0 +1,16 @@
+resource_id,title,url,tier,type,tags,estimated_minutes,priority
+r001,蓝桥杯大赛官网,http://dasai.lanqiao.cn/,official,doc,baseline,30,must_read
+r002,蓝桥云课（官方学习平台）,https://www.lanqiao.cn/courses/,official,course,baseline,120,must_read
+r003,洛谷题库,https://www.luogu.com.cn/,course,tutorial,algorithm,240,recommended
+r004,LeetCode 中文站,https://leetcode.cn/,course,tutorial,algorithm,240,recommended
+r005,代码forces,https://codeforces.com/,course,tutorial,algorithm,180,recommended
+r006,AtCoder 竞赛平台,https://atcoder.jp/,course,tutorial,algorithm,120,recommended
+r007,C++ 参考手册 cppreference,https://zh.cppreference.com/,course,doc,cpp,120,recommended
+r008,Python 官方文档,https://docs.python.org/zh-cn/3/,course,doc,python,90,recommended
+r009,算法竞赛入门经典（OI Wiki）,https://oi-wiki.org/,course,doc,algorithm,300,must_read
+r010,蓝桥杯历届真题讨论（洛谷）,https://www.luogu.com.cn/problem/list,community,tutorial,past_papers,120,recommended
+r011,VisuAlgo 算法可视化,https://visualgo.net/zh,course,tutorial,algorithm,60,optional
+r012,GNU C++ 标准说明,https://gcc.gnu.org/onlinedocs/,course,doc,cpp,45,optional
+r013,蓝桥杯 Python 组常用库文档,https://docs.python.org/3/library/,course,doc,python,60,recommended
+r014,AcWing 算法基础课,https://www.acwing.com/,course,course,algorithm,600,optional
+r015,ICPC 官网（参考赛制）,https://icpc.global/,official,doc,baseline,20,optional
